@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ColorsX.ServiceDefaults\ColorsX.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\ColorsX.WebX.Client\ColorsX.WebX.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\Pages\AppConfigInfo.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+</Project>

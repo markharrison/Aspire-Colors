@@ -1,0 +1,110 @@
+﻿@page "/colors"
+@page "/colors/{numberOfLights:int}"
+
+@attribute [StreamRendering(true)]
+@* @attribute [OutputCache(Duration = 1)] *@
+@rendermode InteractiveServer
+
+<PageTitle>Colors</PageTitle>
+
+<h1>Colors</h1>
+
+@for (int i = 1; i <= numberOfLights; i++)
+{
+    <Color colorMediatorInstance="@colorMediatorInstance" lightId="@i"></Color>
+}
+
+<hr />
+
+<table>
+    <tr>
+        <td>
+            @{
+                switch (currentState)
+                {
+                    case LightsState.LightsOff:
+                        <button @onclick="DoStart">Start</button>
+                        break;
+                    case LightsState.LightsOn:
+                        <button @onclick="DoStop">Stop</button>
+                        break;
+                    case LightsState.SwitchingOff:
+                        <span>Cancelling APIs in flight.   </span>
+                        break;
+                    default:
+                        <span>Unknown state.   </span>
+                        break;
+                }
+            }
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            @((MarkupString)txnInfo)
+        </td>
+    </tr>
+</table>
+
+
+@code {
+    [Parameter]
+    public int numberOfLights { get; set; }
+
+    ColorMediator colorMediatorInstance = new();
+
+    public enum LightsState
+    {
+        LightsOff,
+        LightsOn,
+        SwitchingOff
+    }
+    private LightsState currentState = LightsState.LightsOff;
+
+    string txnInfo = "";
+
+
+    protected override void OnInitialized()
+    {
+        if (numberOfLights == 0)
+        {
+            numberOfLights = 100;
+        }
+
+        if (colorMediatorInstance != null)
+        {
+            colorMediatorInstance.OnAllStopped += OnAllStopped;
+            colorMediatorInstance.OnTxnUpdate += OnTxnUpdate;
+        }
+    }
+
+    private async void OnAllStopped()
+    {
+        currentState = LightsState.LightsOff;
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private void DoStart()
+    {
+        txnInfo = "";
+        currentState = LightsState.LightsOn;
+        colorMediatorInstance.NotifyStartLights();
+
+        StateHasChanged();
+    }
+
+    private void DoStop()
+    {
+        currentState = LightsState.SwitchingOff;
+        colorMediatorInstance.NotifyStopLights(numberOfLights);
+        StateHasChanged();
+    }
+
+    public async void OnTxnUpdate(object? sender, TxnUpdateEventArgs e)
+    {
+        txnInfo = $"Calls:&nbsp;{e.TxnCount}&nbsp;&nbsp;&nbsp;Rate: {(e.TxnCount / e.SecondsElapsed).ToString("F2")} ps";
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+
+}

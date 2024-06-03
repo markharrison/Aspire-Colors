@@ -1,0 +1,33 @@
+﻿@page "/appconfiginfo"
+
+@inject IConfiguration configuration;
+
+<PageTitle>AppConfigInfo</PageTitle>
+
+<h1>ColorsX.Web - AppConfigInfo</h1>
+
+@if (strAppConfigInfo != null)
+{
+    @((MarkupString)strAppConfigInfo)
+}
+
+@code {
+    string strAppConfigInfo = "";
+
+    private string EchoData(string key, string value)
+    {
+        return key + ": <span style='color: blue'>" + value + "</span><br/>";
+    }
+
+    protected override void OnInitialized()
+    {
+        strAppConfigInfo += EchoData("OS Description", System.Runtime.InteropServices.RuntimeInformation.OSDescription);
+        strAppConfigInfo += EchoData("ASPNETCORE_ENVIRONMENT", configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") ?? "Not found");
+        strAppConfigInfo += EchoData("Framework Description", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
+        strAppConfigInfo += EchoData("Instrumentation Key", configuration.GetValue<string>("ApplicationInsights:InstrumentationKey") ?? "Not found");
+        strAppConfigInfo += EchoData("Build Identifier", configuration.GetValue<string>("BuildIdentifier") ?? "Not found");
+        strAppConfigInfo += "<br />";
+
+    }
+
+}

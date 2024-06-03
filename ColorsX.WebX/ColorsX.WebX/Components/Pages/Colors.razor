@@ -1,0 +1,39 @@
+﻿@page "/colors"
+@page "/colors/{numberOfLights:int}"
+
+@attribute [StreamRendering]
+@inject ColorsApiClient colorAPIClient;
+@inject IConfiguration configuration;
+
+<PageTitle>Colors</PageTitle>
+
+<ColorsX.WebX.Client.Pages.Colorsx clientEndpoint="@clientEndpoint" numberOfLights="@numberOfLights"  />
+
+@code {
+    [Parameter]
+    public int numberOfLights { get; set; }
+
+    private int x = 0;
+    string? clientEndpoint;
+
+    protected override void OnInitialized()
+    {
+        clientEndpoint = configuration["services:apiservice:https:0"];
+        if (clientEndpoint != null && !clientEndpoint.StartsWith("http"))
+        {
+            clientEndpoint = configuration["api-url"];
+        }
+
+        if (!clientEndpoint?.EndsWith("/") ?? true)
+        {
+            clientEndpoint += "/";
+        }
+
+        if (numberOfLights == 0)
+        {
+            numberOfLights = 100;
+        }
+
+    }
+
+}

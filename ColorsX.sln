@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.34909.67
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorsX.AppHost", "ColorsX.AppHost\ColorsX.AppHost.csproj", "{9B306DF0-86AC-4FFD-B9EB-2289360DFEAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorsX.ServiceDefaults", "ColorsX.ServiceDefaults\ColorsX.ServiceDefaults.csproj", "{4EE42C47-4B4E-4B73-9490-6C1B52390E2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorsX.ApiService", "ColorsX.ApiService\ColorsX.ApiService.csproj", "{F555C881-2BE1-4BE6-83D4-AB528E934BAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorsX.Web", "ColorsX.Web\ColorsX.Web.csproj", "{36B718B7-C7FE-46BB-A348-A0638B8A0636}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorsX.WebX", "ColorsX.WebX\ColorsX.WebX\ColorsX.WebX.csproj", "{89DA519A-54E2-413F-8B2F-5D6BD06A6119}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorsX.WebX.Client", "ColorsX.WebX\ColorsX.WebX.Client\ColorsX.WebX.Client.csproj", "{D2A8F9BE-1368-4D90-8946-FDACA67B51F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B306DF0-86AC-4FFD-B9EB-2289360DFEAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B306DF0-86AC-4FFD-B9EB-2289360DFEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B306DF0-86AC-4FFD-B9EB-2289360DFEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B306DF0-86AC-4FFD-B9EB-2289360DFEAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE42C47-4B4E-4B73-9490-6C1B52390E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE42C47-4B4E-4B73-9490-6C1B52390E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE42C47-4B4E-4B73-9490-6C1B52390E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE42C47-4B4E-4B73-9490-6C1B52390E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F555C881-2BE1-4BE6-83D4-AB528E934BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F555C881-2BE1-4BE6-83D4-AB528E934BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F555C881-2BE1-4BE6-83D4-AB528E934BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F555C881-2BE1-4BE6-83D4-AB528E934BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B718B7-C7FE-46BB-A348-A0638B8A0636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B718B7-C7FE-46BB-A348-A0638B8A0636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B718B7-C7FE-46BB-A348-A0638B8A0636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B718B7-C7FE-46BB-A348-A0638B8A0636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DA519A-54E2-413F-8B2F-5D6BD06A6119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DA519A-54E2-413F-8B2F-5D6BD06A6119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DA519A-54E2-413F-8B2F-5D6BD06A6119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DA519A-54E2-413F-8B2F-5D6BD06A6119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A8F9BE-1368-4D90-8946-FDACA67B51F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A8F9BE-1368-4D90-8946-FDACA67B51F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A8F9BE-1368-4D90-8946-FDACA67B51F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A8F9BE-1368-4D90-8946-FDACA67B51F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E594045-C97D-4C5F-A7E1-9B0EDC54819A}
+	EndGlobalSection
+EndGlobal
