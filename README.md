@@ -17,15 +17,9 @@ It includes:
 
 ![alt text](docs/image-1.png)
 
+## Getting Started
 
-## Azure Developer CLI
-
-You can use the Azure Developer CLI to easily provision Azure Container Apps.
-
-Either clone the repo to desktop or use the CodeSpaces.
-
-
-Use a command prompt at the route directory
+Either clone the repo to desktop or use GitHub CodeSpaces.
 
 Install the aspire workload (sudo may not be required)
 
@@ -34,6 +28,16 @@ sudo dotnet workload update
 sudo dotnet workload install aspire
 sudo dotnet workload list
 ```
+
+## Azure Developer CLI
+
+You can use the Azure Developer CLI to easily provision Azure Container Apps resources and deploy the application.
+
+Go to route directory - where the solution file is.
+
+```
+cd <directory>
+``` 
 
 Logon to Azure and initialise Azure Developer CLI to inspect the application.
 
