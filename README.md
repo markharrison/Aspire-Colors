@@ -44,7 +44,7 @@ azd init
 
 ![alt text](docs/image-2.png)
 
-To provision the Azure Container Apps environment 
+To provision the Azure Container Apps Environment 
 
 ```
 azd provision
@@ -66,17 +66,24 @@ The output will give links to
 
 ![alt text](docs/image-5.png)
 
-The ColorsX API has its ingress set to not allow access from outside the Azure Container Apps environment.  This needs to be changed if you want to see the Swagger page.  
-
-The ColorsX Web app uses Blazor Server - the API call is within the Azure Container Apps environment.
-
-The ColorsX WebX app uses Blazor WebAssembly - the APIs calls are from the web browser and cannot acces the API app. To allow this, the ingress needs amending to allow external access.  Will need to change the environment variable to point to the new url of API-service.
-
+Use the Azure management portal to see the resources provisioned.
 
 ![alt text](docs/image-6.png)
 
+## Ingress for API when using Azure Container Apps 
 
-# Scale up 
+Behaviour will be different running on a local machine compared to running on Azure Container App - for the latter, the ingress is set to only allow access from traffic originating from within the Azure Container App Environment.
+
+The ColorsX Web app uses Blazor Server - the API calls are from the server within the Azure Container Apps environment.
+
+The ColorsX WebX app uses Blazor WebAssembly - the APIs calls are from the web browser direct to the API url.  To use this, the ingress needs to be amended to allow external access.  Also will need to change the environment variable to point to the new url of the API Service.
+
+Likewise the ingress needs to be amended to view the API Swagger UI.
+
+![alt text](docs/image-7.png)
+
+
+## Scale up 
 
 You can change the number of lights by amending the Colors URL - append `/{numberoflights}`
 
