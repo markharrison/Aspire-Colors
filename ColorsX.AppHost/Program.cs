@@ -8,8 +8,10 @@ var webfrontend = builder.AddProject<Projects.ColorsX_Web>("webfrontend")
     .WithExternalHttpEndpoints()
     .WithReference(apiService);
 
-var webfrontendx = builder.AddProject<Projects.ColorsX_WebX>("webfrontendx")
+var webfrontendx = builder.AddProject<Projects.ColorsX_WebX>("webfrontendwasm")
     .WithExternalHttpEndpoints()
     .WithReference(apiService);
+
+//webfrontendwasm.WithEnvironment("api_url", "https://apiservice.internal.livelyforest-318b32fc.uksouth.azurecontainerapps.io/");
 
 builder.Build().Run();

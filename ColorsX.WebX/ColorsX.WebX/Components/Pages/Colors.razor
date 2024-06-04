@@ -2,7 +2,6 @@
 @page "/colors/{numberOfLights:int}"
 
 @attribute [StreamRendering]
-@inject ColorsApiClient colorAPIClient;
 @inject IConfiguration configuration;
 
 <PageTitle>Colors</PageTitle>
@@ -13,15 +12,14 @@
     [Parameter]
     public int numberOfLights { get; set; }
 
-    private int x = 0;
     string? clientEndpoint;
 
     protected override void OnInitialized()
     {
-        clientEndpoint = configuration["services:apiservice:https:0"];
-        if (clientEndpoint != null && !clientEndpoint.StartsWith("http"))
+        clientEndpoint = configuration["api_url"];
+        if (string.IsNullOrEmpty(clientEndpoint) || !clientEndpoint.StartsWith("http"))
         {
-            clientEndpoint = configuration["api-url"];
+            clientEndpoint = configuration["services:apiservice:https:0"];
         }
 
         if (!clientEndpoint?.EndsWith("/") ?? true)

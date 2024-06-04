@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ColorsX.ServiceDefaults\ColorsX.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\ColorsX.Shared\ColorsX.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

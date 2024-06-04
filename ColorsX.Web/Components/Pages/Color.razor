@@ -1,13 +1,14 @@
-﻿@using System.ComponentModel.DataAnnotations
+﻿@using System.ComponentModel.DataAnnotations;
+@using System.Net;
+@using ColorsX.Shared;
+
 @attribute [StreamRendering(false)]
 
-@inject ColorsApiClient ColorsApi
-@inject ILogger<Colors> Logger
+@inject HttpClient httpClient;
+@inject ILogger<Color> Logger
 
 @rendermode InteractiveServer
 @implements IDisposable
-
-<PageTitle>Color</PageTitle>
 
 @{
     switch (currentState)
@@ -26,10 +27,7 @@
             <svg height='30' width='30'><circle id='idLight' cx='15' cy='15' r='12' stroke='black' stroke-width='1' fill='@randomcolor?.HexCode' /></svg>
             break;
         case LightState.Error:
-            <svg height='30' width='30'>
-                <line x1='5' y1='5' x2='25' y2='25' style='stroke:red;stroke-width:2' />
-                <line x1='25' y1='5' x2='5' y2='25' style='stroke:red;stroke-width:2' />
-            </svg>
+            <span style='color: red'>@((MarkupString)statusError + " ")</span>
             break;
         default:
             <p>Unknown state.</p>
@@ -44,10 +42,13 @@
     [Parameter]
     [Required]
     public int lightId { get; set; }
+    [Parameter]
+    [Required]
+    public string? clientEndpoint { get; set; }
 
+    string statusError = "";
     private ColorItem? randomcolor;
     private Random random = new Random();
-    private bool loginfo = false;
     private CancellationTokenSource cts = new CancellationTokenSource();
 
     public enum LightState
@@ -62,8 +63,6 @@
 
     protected override void OnInitialized()
     {
-        LogInfo("OnInitialized");
-
         if (colorMediatorInstance != null)
         {
             colorMediatorInstance.OnStartLights += OnStartLights;
@@ -79,28 +78,19 @@
     private void OnStartLights()
     {
         _ = StartLights();
-
-        LogInfo("OnStartLights");
     }
 
     private void OnStopLights()
     {
         _ = StopLights();
-
-        LogInfo("OnStopLights");
-
     }
 
     private async Task StartLights()
     {
-        LogInfo($"StartLights Enter");
-
         if (currentState != LightState.Stopped)
         {
-            LogInfo($"StartLights Not Ready");
             return;
         }
-
 
         currentState = LightState.Starting;
         await InvokeAsync(StateHasChanged);
@@ -112,35 +102,33 @@
             int randomDelay = random.Next(500, 15001);
             try
             {
-                LogInfo($"ShowLights Delay {randomDelay}");
                 await Task.Delay(randomDelay, cts.Token);
 
                 if (currentState == LightState.LightOn || currentState == LightState.Starting)
                 {
                     await GetRandomColor();
                     await InvokeAsync(StateHasChanged);
-                    
-                    colorMediatorInstance?.NotifyBumpTxn();
+
                 }
             }
             catch (OperationCanceledException)
             {
-                LogInfo($"StartLights Operation Cancelled");
             }
             catch (Exception ex)
             {
-                LogInfo($"StartLights Exception: {ex.Message}");
+                if (ex.Message.Contains("Failed to fetch"))
+                {
+                    statusError = "FetchX";
+                }
+
+                currentState = LightState.Error;
             }
         }
-
-        LogInfo($"StartLights Exit");
 
     }
 
     private async Task StopLights()
     {
-        LogInfo($"StopLights Enter");
-
         currentState = LightState.Stopping;
         randomcolor = null;
         await InvokeAsync(StateHasChanged);
@@ -151,11 +139,9 @@
         }
         catch (OperationCanceledException)
         {
-            LogInfo($"StopLights Operation Cancelled");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            LogInfo($"StopLights Exception: {ex.Message}");
         }
 
         currentState = LightState.Stopped;
@@ -164,47 +150,47 @@
 
         colorMediatorInstance?.NotifyStopped();
 
-        LogInfo($"StopLights Exit");
-
     }
 
     private async Task GetRandomColor()
     {
-        LogInfo($"GetRandomColor {currentState} ");
 
         try
         {
             if (!cts.Token.IsCancellationRequested)
             {
-                randomcolor = await ColorsApi.GetColorsRandomAsync(cts.Token);
+                HttpResponseMessage response = await httpClient.GetAsync(clientEndpoint + "colors/random", cts.Token);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    randomcolor = await response.Content.ReadFromJsonAsync<ColorItem>();
+                    colorMediatorInstance?.NotifyBumpTxn();
+                }
+                else
+                {
+                    statusError = response.StatusCode.ToString();
+                    currentState = LightState.Error;
+                }
+
                 if (currentState == LightState.Starting)
                 {
                     currentState = LightState.LightOn;
                 }
             }
+
         }
         catch (OperationCanceledException)
         {
-            LogInfo($"GetRandomColor Operation Cancelled");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            LogInfo($"GetRandomColor Exception: {ex.Message}");
         }
 
     }
 
     public void Dispose()
     {
-        LogInfo($"Dispose");
-
         _ = StopLights();
-
-    }
-
-    public void LogInfo(string msg)
-    {
-        if (loginfo) Logger.LogInformation($"{lightId} {msg}  <<<<<");
     }
 
 }

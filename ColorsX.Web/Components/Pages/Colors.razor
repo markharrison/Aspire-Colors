@@ -5,13 +5,15 @@
 @* @attribute [OutputCache(Duration = 1)] *@
 @rendermode InteractiveServer
 
+@inject IConfiguration configuration;
+
 <PageTitle>Colors</PageTitle>
 
 <h1>Colors</h1>
 
 @for (int i = 1; i <= numberOfLights; i++)
 {
-    <Color colorMediatorInstance="@colorMediatorInstance" lightId="@i"></Color>
+    <Color colorMediatorInstance="@colorMediatorInstance" lightId="@i" clientEndpoint="@clientEndpoint"></Color>
 }
 
 <hr />
@@ -38,7 +40,13 @@
             }
         </td>
         <td>
-            &nbsp;
+            &nbsp;&nbsp;&nbsp;
+        </td>
+        <td style="color: purple;">
+            @((MarkupString)(clientEndpoint ?? ""))
+        </td>
+        <td>
+            &nbsp;&nbsp;&nbsp;
         </td>
         <td>
             @((MarkupString)txnInfo)
@@ -62,7 +70,7 @@
     private LightsState currentState = LightsState.LightsOff;
 
     string txnInfo = "";
-
+    string? clientEndpoint;
 
     protected override void OnInitialized()
     {
@@ -76,6 +84,18 @@
             colorMediatorInstance.OnAllStopped += OnAllStopped;
             colorMediatorInstance.OnTxnUpdate += OnTxnUpdate;
         }
+
+        clientEndpoint = configuration["api_url"];
+        if (string.IsNullOrEmpty(clientEndpoint) || !clientEndpoint.StartsWith("http"))
+        {
+            clientEndpoint = configuration["services:apiservice:https:0"];
+        }
+
+        if (!clientEndpoint?.EndsWith("/") ?? true)
+        {
+            clientEndpoint += "/";
+        }
+
     }
 
     private async void OnAllStopped()

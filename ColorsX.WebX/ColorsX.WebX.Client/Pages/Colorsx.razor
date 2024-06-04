@@ -1,8 +1,7 @@
 ﻿@using System.ComponentModel.DataAnnotations
 
 @attribute [StreamRendering(true)]
-@* @attribute [OutputCache(Duration = 1)] *@
-@rendermode InteractiveAuto
+@rendermode InteractiveWebAssembly
 
 <PageTitle>Colors</PageTitle>
 
@@ -10,7 +9,7 @@
 
 @for (int i = 1; i <= numberOfLights; i++)
 {
-    <Color colorMediatorInstance="@colorMediatorInstance" lightId="@i"></Color>
+    <Color colorMediatorInstance="@colorMediatorInstance" lightId="@i" clientEndpoint="@clientEndpoint"></Color>
 }
 
 <hr />
@@ -37,7 +36,13 @@
             }
         </td>
         <td>
-            &nbsp;
+            &nbsp;&nbsp;&nbsp;
+        </td>
+        <td style="color: purple;">
+            @((MarkupString)(clientEndpoint ?? ""))
+        </td>
+        <td>
+            &nbsp;&nbsp;&nbsp;
         </td>
         <td>
             @((MarkupString)txnInfo)

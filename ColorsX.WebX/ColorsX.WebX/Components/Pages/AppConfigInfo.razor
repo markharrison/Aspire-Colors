@@ -28,7 +28,7 @@
         strAppConfigInfo += EchoData("Build Identifier", configuration.GetValue<string>("BuildIdentifier") ?? "Not found");
         strAppConfigInfo += "<br />";
         strAppConfigInfo += EchoData("clientEndpoint - services:apiservice:https:0", configuration.GetValue<string>("services:apiservice:https:0") ?? "Not found");
-        strAppConfigInfo += EchoData("clientEndpoint - api-url", configuration.GetValue<string>("api-url") ?? "Not found");
+        strAppConfigInfo += EchoData("clientEndpoint - api_url", configuration.GetValue<string>("api_url") ?? "Not found");
     }
 
 }

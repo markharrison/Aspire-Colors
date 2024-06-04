@@ -1,3 +1,6 @@
+using Swashbuckle.AspNetCore.SwaggerGen;
+using ColorsX.Shared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
@@ -16,6 +19,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,10 +30,11 @@ app.UseExceptionHandler();
 
 app.UseCors();
 
-var summaries = new[]
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ColorX.API");
+});
 
 var colorItems = new List<ColorItem>
 {
@@ -34,6 +42,12 @@ var colorItems = new List<ColorItem>
     new ColorItem("Yellow", "#FFFF00"),
     new ColorItem("Black", "#000000")
 };
+
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
 
 // Add route to get color items
 app.MapGet("/colors", () =>
@@ -58,9 +72,6 @@ app.MapPost("/colors", (ColorItem colorItem) =>
 app.MapDefaultEndpoints();
 
 app.Run();
-
-// Add color item - include name and hexcode 
-public record ColorItem(string Name, string HexCode);
 
 
 
