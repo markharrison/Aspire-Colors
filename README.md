@@ -96,7 +96,7 @@ Example - for 500 lights
 https:// webfrontend.icybush-c6c1e5ad.uksouth.azurecontainerapps.io/colors/500
 
 
-Use this to drive a high transaction rate.  Notice that the number of replicas of the API App scale up to accommodate the high transaction rate.  it is set to allow between 1 and 10.
+Use this to drive a high transaction rate.  Notice that the number of replicas of the API App auto-scale up to accommodate the high transaction rate.  it is set to allow between 1 and 10.
 
 ## Tidy up 
 
