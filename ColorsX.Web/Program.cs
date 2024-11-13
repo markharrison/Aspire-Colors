@@ -39,12 +39,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+app.MapStaticAssets();
 app.UseAntiforgery();
 
 app.UseOutputCache();
 
 app.MapRazorComponents<App>()
+    .WithStaticAssets()
     .AddInteractiveServerRenderMode();
 
 app.MapDefaultEndpoints();

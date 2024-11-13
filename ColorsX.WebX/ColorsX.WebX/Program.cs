@@ -42,10 +42,11 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseStaticFiles();
+        app.MapStaticAssets();
         app.UseAntiforgery();
 
         app.MapRazorComponents<App>()
+            .WithStaticAssets()
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(Client._Imports).Assembly);

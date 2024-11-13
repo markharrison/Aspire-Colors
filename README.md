@@ -1,9 +1,10 @@
 # Aspire-Colors
 
+13 Nov 2024 - Updated to .NET 9.0
+
 .NET Aspire is an opinionated, cloud-ready stack for building observable, production-ready, distributed applications.
 
-This project is a .NET Aspire / Blazor version of [ColorsWeb](https://github.com/markharrison/ColorsWeb) & [ColorsAPI](https://github.com/markharrison/ColorsAPI). 
-
+This project is a .NET Aspire / Blazor version of [ColorsWeb](https://github.com/markharrison/ColorsWeb) & [ColorsAPI](https://github.com/markharrison/ColorsAPI).
 
 ## ColorsX
 
@@ -11,9 +12,9 @@ It includes:
 
 - ColorsX API app ... API includes returning a random color
 
-- ColorsX Web ... displays random light colors driven by calls to API.  Uses Blazor Server. 
+- ColorsX Web ... displays random light colors driven by calls to API.  Uses Blazor Server.
 
-- ColorsX WebX ... displays random light colors driven by calls to API.  Uses Blazor WebAssembly. 
+- ColorsX WebX ... displays random light colors driven by calls to API.  Uses Blazor WebAssembly.
 
 ![alt text](docs/image-1.png)
 
@@ -23,7 +24,7 @@ Either clone the repo to desktop or use GitHub CodeSpaces.
 
 Install the aspire workload (sudo may not be required)
 
-```
+```bash
 sudo dotnet workload update
 sudo dotnet workload install aspire
 sudo dotnet workload list
@@ -35,36 +36,37 @@ You can use the Azure Developer CLI to easily provision Azure Container Apps res
 
 Go to route directory - where the solution file is.
 
-```
+```bash
 cd <directory>
-``` 
+```
 
 Logon to Azure and initialise Azure Developer CLI to inspect the application.
 
-```
+```bash
 azd auth login
 azd init
 ```
 
 ![alt text](docs/image-2.png)
 
-To provision the Azure Container Apps Environment 
+To provision the Azure Container Apps Environment
 
-```
+```bash
 azd provision
 ```
 
 ![alt text](docs/image-3.png)
 
-To deploy the application to Azure Container Apps 
+To deploy the application to Azure Container Apps
 
-```
+```bash
 azd deploy
 ```
 
 ![alt text](docs/image-4.png)
 
-The output will give links to 
+The output will give links to:
+
 - ColorsX Web application
 - Aspire Dashboard
 
@@ -74,7 +76,7 @@ Use the Azure management portal to see the resources provisioned.
 
 ![alt text](docs/image-6.png)
 
-## Ingress for API when using Azure Container Apps 
+## Ingress for API when using Azure Container Apps
 
 Behaviour will be different running on a local machine compared to running on Azure Container App - for the latter, the ingress is set to only allow access from traffic originating from within the Azure Container App Environment.
 
@@ -86,8 +88,7 @@ Likewise the ingress needs to be amended to view the API Swagger UI.
 
 ![alt text](docs/image-7.png)
 
-
-## Scale up 
+## Scale up
 
 You can change the number of lights by amending the Colors URL - append `/{numberoflights}`
 
@@ -95,13 +96,12 @@ Example - for 500 lights
 
 https:// webfrontend.icybush-c6c1e5ad.uksouth.azurecontainerapps.io/colors/500
 
-
 Use this to drive a high transaction rate.  Notice that the number of replicas of the API App auto-scale up to accommodate the high transaction rate.  it is set to allow between 1 and 10.
 
-## Tidy up 
+## Tidy up
 
-You can shutdown / delete Azure resources with 
+You can shutdown / delete Azure resources with
 
-```
+```bash
 azd down
 ```
